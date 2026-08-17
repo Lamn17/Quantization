@@ -1,0 +1,15 @@
+dataset:
+  name: coco2017
+  format: coco
+  root: "/mnt/d/ Downloads/coco"
+  train:
+    images: images/train2017
+    annotations: annotations/instances_train2017.json
+  val:
+    images: images/val2017
+    annotations: annotations/instances_val2017.json
+  class_names: auto
+  native_evaluator: coco
+  model_override:
+    checkpoint: /mnt/d/Project/Quantization/yolo26n.pt
+    num_classes: 80

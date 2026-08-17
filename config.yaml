@@ -1,0 +1,42 @@
+paths:
+  checkpoint: /ABSOLUTE/PATH/TO/model.pt
+  output_root: outputs
+
+model:
+  name: yolov8s
+  imgsz: 640
+
+runtime:
+  device: cuda:0
+  batch_size: 1
+  workers: 2
+  seed: 0
+  deterministic: true
+
+calibration:
+  size: 128
+  random_seeds: [0, 1, 2, 3, 4]
+
+scale_bins:
+  mode: absolute_pixels
+  small_max_area: 1024
+  medium_max_area: 9216
+  # Relative mode instead uses:
+  small_max_ratio: 0.002
+  medium_max_ratio: 0.02
+
+evaluation:
+  conf_threshold_export: 0.001
+  nms_iou: 0.7
+  max_detections: 300
+
+diagnostics:
+  score_threshold: 0.25
+  match_iou_threshold: 0.5
+
+analysis:
+  protocol: protocols/framing.yaml
+
+quantization:
+  backend: tensorrt
+  workspace_gb: 4

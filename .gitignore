@@ -1,0 +1,32 @@
+# Python and uv
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+
+# Experiment outputs and heavyweight model artifacts
+runs/
+results/
+outputs/*
+!outputs/.gitkeep
+data/calibration_lists/*.txt
+data/calibration_lists/*.json
+data/metadata/*.json
+!data/calibration_lists/.gitkeep
+!data/metadata/.gitkeep
+*.pt
+*.onnx
+*.engine
+*.plan
+*.cache
+
+# Job logs
+logs/
+*.log
+
+# Local editor and OS files
+.vscode/
+.idea/
+.DS_Store

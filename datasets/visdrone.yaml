@@ -1,0 +1,28 @@
+dataset:
+  name: visdrone
+  format: visdrone
+  root: "/mnt/d/ Downloads/VisDrone/VisDrone_original"
+  train:
+    images: VisDrone2019-DET-train/images
+    annotations: VisDrone2019-DET-train/annotations
+  val:
+    images: VisDrone2019-DET-val/images
+    annotations: VisDrone2019-DET-val/annotations
+  test:
+    images: VisDrone2019-DET-test-dev/images
+    annotations: VisDrone2019-DET-test-dev/annotations
+  class_names:
+    - pedestrian
+    - people
+    - bicycle
+    - car
+    - van
+    - truck
+    - tricycle
+    - awning-tricycle
+    - bus
+    - motor
+  native_evaluator: visdrone
+  model_override:
+    checkpoint: /mnt/d/Project/Quantization/best-visdrone.pt
+    num_classes: 10

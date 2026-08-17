@@ -1,0 +1,77 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "low-bits-small-objects"
+version = "0.2.0"
+description = "Minimal multi-dataset scale-aware quantization benchmark"
+readme = "README.md"
+requires-python = ">=3.10,<3.11"
+dependencies = [
+  "matplotlib>=3.7",
+  "numpy>=1.24",
+  "pandas>=2.0",
+  "Pillow>=9.5",
+  "pycocotools>=2.0.7",
+  "PyYAML>=6.0",
+  "tqdm>=4.66",
+  "ultralytics>=8.3",
+]
+
+[project.optional-dependencies]
+cpu = [
+  "torch==2.13.0",
+  "torchvision==0.28.0",
+]
+cu130 = [
+  "nvidia-modelopt[onnx]>=0.44",
+  "onnx>=1.12,<2",
+  "onnxslim>=0.1.82",
+  "tensorrt-cu13==11.2.1.2; sys_platform == 'linux' and platform_machine == 'x86_64'",
+  "torch==2.13.0",
+  "torchvision==0.28.0",
+]
+
+[dependency-groups]
+dev = [
+  "pytest>=8.0",
+  "ruff>=0.9",
+]
+
+[tool.setuptools]
+py-modules = ["dataset", "calibration", "inference", "quantization", "evaluation", "diagnostics", "analysis_statistics"]
+package-dir = {"" = "src"}
+
+[tool.pytest.ini_options]
+pythonpath = ["src", "scripts"]
+testpaths = ["tests"]
+
+[tool.uv]
+package = true
+conflicts = [
+  [
+    { extra = "cpu" },
+    { extra = "cu130" },
+  ],
+]
+
+[tool.uv.sources]
+torch = [
+  { index = "pytorch-cpu", extra = "cpu" },
+  { index = "pytorch-cu130", extra = "cu130" },
+]
+torchvision = [
+  { index = "pytorch-cpu", extra = "cpu" },
+  { index = "pytorch-cu130", extra = "cu130" },
+]
+
+[[tool.uv.index]]
+name = "pytorch-cpu"
+url = "https://download.pytorch.org/whl/cpu"
+explicit = true
+
+[[tool.uv.index]]
+name = "pytorch-cu130"
+url = "https://download.pytorch.org/whl/cu130"
+explicit = true

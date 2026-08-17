@@ -1,0 +1,43 @@
+protocol:
+  name: framing
+  version: 1
+  primary_iou: 0.50
+  primary_score: 0.20
+  iou_thresholds: [0.50, 0.75]
+  score_thresholds: [0.05, 0.10, 0.20, 0.30, 0.50]
+  matching: score_ordered_one_to_one_greedy
+  tie_breaking: highest_iou_then_lowest_input_index
+  exact_class: true
+  scale_bins:
+    mode: absolute_pixels
+    small_max_area: 1024
+    medium_max_area: 9216
+    small_max_ratio: 0.002
+    medium_max_ratio: 0.02
+  stratification:
+    variable: fp32_matched_score
+    bins: 10
+    edges_scope: dataset_fp32_success_all_scales
+    minimum_per_scale_for_decision: 50
+  prediction_pairing:
+    score_threshold: 0.05
+    minimum_iou: 0.10
+  failure_modes:
+    priority: [confidence, localization, class, complete_miss]
+    minimum_localization_iou: 0.10
+  ap_decomposition:
+    status: score_restored_counterfactual_not_unique_causal_decomposition
+    pairing_score_threshold: 0.05
+    minimum_pair_iou: 0.10
+    unmatched_int8_score: retain
+  bootstrap:
+    unit: image
+    replicates: 1000
+    seed: 20260813
+  regression:
+    reference_scale: small
+    covariates: [scale, fp32_score, fp32_iou]
+    maximum_iterations: 100
+    tolerance: 1.0e-8
+  outliers:
+    visdrone_random_s0: retain_and_report_sensitivity_without
